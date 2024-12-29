@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News App</title>
+    <style>
+        body {
+            background-color: #e6f2ff; /* Soft blue background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .search-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .search-container input {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 60%;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .news-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .news-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-item h2 {
+            font-size: 1.5rem;
+            margin: 15px;
+            color: #333;
+        }
+
+        .news-item p {
+            font-size: 1rem;
+            margin: 0 15px 15px;
+        }
+
+        .news-item a {
+            display: block;
+            margin: 10px 15px;
+            text-align: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .news-item a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Latest News Around the World</h1>
+</header>
+
+<div class="search-container">
+    <form action="/search" method="get">
+        <input type="text" name="query" placeholder="Search news..." required>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div class="news-container">
+    {% for article in articles %}
+        <div class="news-item">
+            {% if article.urlToImage %}
+                <img src="{{ article.urlToImage }}" alt="{{ article.title }}">
+            {% endif %}
+            <div class="news-content">
+                <h2><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h2>
+                <p>{{ article.description }}</p>
+                <a href="{{ article.url }}" target="_blank">Read more</a>
+            </div>
+        </div>
+    {% else %}
+        <p>No articles found.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
